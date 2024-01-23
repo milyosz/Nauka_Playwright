@@ -39,3 +39,16 @@ Zlokalizuj etap który chcesz zobaczyć (może to być sekcja lub lekcja)
 - Autosave: in File -> Auto save
 - Timeline: Explorer -> TIMELINE
 - Formating: editor -> contex menu -> Format document
+
+### Prettier
+- install Prettier
+`npm install --save-dev --save-exact prettier`
+-configure Prettier
+  - exlude files in `.prettierignore`
+    ```
+    package-lock.json
+    playwright-report
+
+    ```
+  - set rules in .prettierc.json
+    
