@@ -50,5 +50,12 @@ Zlokalizuj etap który chcesz zobaczyć (może to być sekcja lub lekcja)
     playwright-report
 
     ```
-  - set rules in .prettierc.json
-    
+  - set rules in `.prettierc.json`
+  ```
+  {
+      "singleQuote": true
+  }
+
+  ```
+- run Prettier
+  `npx prettier --write`
