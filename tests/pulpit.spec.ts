@@ -5,7 +5,6 @@ const rValue = Math.floor(Math.random() * (50 - 20) + 20);
 const url = 'https://demo-bank.vercel.app/';
 const login = '111111111';
 const password = 'qwertyui';
-const expectedUsrName = 'Jan Demobankowy';
 const receirverId = '2';
 const transferTitle = 'Test_Przelew_1';
 const expectedTransferReceiver = 'Chuck Demobankowy';
