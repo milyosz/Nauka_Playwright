@@ -8,9 +8,7 @@ test.describe('Pulpit account test', () => {
   const blankMessage = 'Brak wiadomości';
 
   test.beforeEach(async ({ page }) => {
-    const url = 'https://demo-bank.vercel.app/';
-    await page.goto(url);
-
+    await page.goto('/'); // strona startowa z configu baseURL
     await page.getByTestId('login-input').fill(login);
     await page.getByTestId('password-input').fill(password);
     await page.getByTestId('login-button').click();
