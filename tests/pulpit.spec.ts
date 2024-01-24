@@ -1,25 +1,29 @@
 import { test, expect } from '@playwright/test';
 
-// Arrange 
-
 test.describe('Pulpit account test', () => {
-  test('Przelew z konta', async ({ page }) => {
-    // Arrange
-    const rValue = Math.floor(Math.random() * (50 - 20) + 20);
+  // Arrange
+  const login = '111111111';
+  const password = 'qwertyui';
+  const rValue = Math.floor(Math.random() * (50 - 20) + 20);
+  const blankMessage = 'Brak wiadomości';
+
+  test.beforeEach(async ({ page }) => {
     const url = 'https://demo-bank.vercel.app/';
-    const login = '111111111';
-    const password = 'qwertyui';
-    const receirverId = '2';
-    const transferTitle = 'Test_Przelew_1';
-    const expectedTransferReceiver = 'Chuck Demobankowy';
-    const blankMessage = 'Brak wiadomości';
-    const expectedMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${rValue},00PLN - ${transferTitle}`;
-    // Act
     await page.goto(url);
+
     await page.getByTestId('login-input').fill(login);
     await page.getByTestId('password-input').fill(password);
     await page.getByTestId('login-button').click();
+  });
 
+  test('Przelew z konta', async ({ page }) => {
+    // Arrange
+    const receirverId = '2';
+    const transferTitle = 'Test_Przelew_1';
+    const expectedTransferReceiver = 'Chuck Demobankowy';
+    const expectedMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${rValue},00PLN - ${transferTitle}`;
+
+    // Act
     await page.locator('#widget_1_transfer_receiver').selectOption(receirverId); // # pozwala wyszukać po id elementu
     await page.locator('#widget_1_transfer_amount').fill(rValue.toString());
     await page.locator('#widget_1_transfer_title').fill(transferTitle);
@@ -41,24 +45,10 @@ test.describe('Pulpit account test', () => {
 
   test('successfull mobile top-up', async ({ page }) => {
     // Arrange
-    const rValue = Math.floor(Math.random() * (50 - 20) + 20);
-    const url = 'https://demo-bank.vercel.app/';
-    const login = '111111111';
-    const password = 'qwertyui';
-    const blankMessage = 'Brak wiadomości';
     const numberOption = '503 xxx xxx';
     const expectedMessage = `Doładowanie wykonane! ${rValue},00PLN na numer ${numberOption}`;
-    // Act
-    await page.goto(url);
-    await page.getByTestId('login-input').fill(login);
-    await page.getByTestId('password-input').fill(password);
-    await page.getByTestId('login-button').click();
-    // Act
-    await page.goto(url);
-    await page.getByTestId('login-input').fill(login);
-    await page.getByTestId('password-input').fill(password);
-    await page.getByTestId('login-button').click();
 
+    // Act
     await page.locator('#widget_1_topup_receiver').selectOption(numberOption);
     await page.locator('#widget_1_topup_amount').fill(rValue.toString());
     // await page.locator('#widget_1_topup_agreement').check(); // działa check box zbugowany z boku

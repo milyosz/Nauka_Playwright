@@ -1,16 +1,23 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('User login to Account', () => {
+  const expectedError = 'identyfikator ma min. 8 znaków';
+  const login = '111111111';
+  const tooShort = '123';
+
+  test.beforeEach(async ({ page }) => {
+    const url = 'https://demo-bank.vercel.app/';
+    await page.goto(url);
+  });
+
   test('login with correct credidentials', async ({ page }) => {
     // test.only - wywołanie tylko wybranych testów
     // Arrange
-    const url = 'https://demo-bank.vercel.app/';
-    const login = '111111111';
     const password = 'qwertyui';
     const expectedUsrName = 'Jan Demobankowy';
 
     // Act
-    await page.goto(url);
+
     await page.getByTestId('login-input').fill(login); // await page.getByTestId('login-input').click(); // sam fill poniżej wywołuje clicka mozna tak powiezdiec
     await page.getByTestId('password-input').click();
 
@@ -25,34 +32,26 @@ test.describe('User login to Account', () => {
 
   test('unsuccessful login with too short username', async ({ page }) => {
     // Arrange
-    const url = 'https://demo-bank.vercel.app/';
 
     // Act
-    await page.goto('https://demo-bank.vercel.app/');
-    await page.getByTestId('login-input').fill('123'); // await page.getByTestId('login-input').click();
+    await page.getByTestId('login-input').fill(tooShort); // await page.getByTestId('login-input').click();
     await page.getByTestId('password-input').click();
 
     // Assert
-    await expect(page.getByTestId('error-login-id')).toHaveText(
-      'identyfikator ma min. 8 znaków',
-    );
+    await expect(page.getByTestId('error-login-id')).toHaveText(expectedError);
   });
 
   test('unsuccessful login with too short password', async ({ page }) => {
-    // Arrange
-    const login = '111111111';
-
     // Act
-    await page.goto('https://demo-bank.vercel.app/');
     // await page.getByTestId('login-input').click();
     await page.getByTestId('login-input').fill(login);
     await page.getByTestId('password-input').click();
-    await page.getByTestId('password-input').fill('123');
+    await page.getByTestId('password-input').fill(tooShort);
     await page.getByTestId('password-input').blur(); // metoda wyjścia z okna inputu, przez co wywołuje się error hasła
 
     // Assert
     await expect(page.getByTestId('error-login-password')).toHaveText(
-      'identyfikator ma min. 8 znaków',
+      expectedError,
     ); //hasło ma min. 8 znaków
   });
 });
