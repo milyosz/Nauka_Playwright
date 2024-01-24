@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
+import { loginData } from '../test-data/login.data';
 
 test.describe('User login to Account', () => {
-  
   test.beforeEach(async ({ page }) => {
     // const url = 'https://demo-bank.vercel.app/';
     // await page.goto(url); // można uzyc skrotu z configu uzywajac baseURL
@@ -11,9 +11,10 @@ test.describe('User login to Account', () => {
   test('login with correct credidentials', async ({ page }) => {
     // test.only - wywołanie tylko wybranych testów
     // Arrange
-    const password = 'qwertyui';
+    const login = loginData.login; //wywołanie danych z pliku test-data/login.data.ts
+    const password = loginData.password;
     const expectedUsrName = 'Jan Demobankowy';
-    const login = '111111111';
+    
     // Act
 
     await page.getByTestId('login-input').fill(login); // await page.getByTestId('login-input').click(); // sam fill poniżej wywołuje clicka mozna tak powiezdiec
@@ -32,7 +33,7 @@ test.describe('User login to Account', () => {
     // Arrange
     const tooShort = '123';
     const expectedError = 'identyfikator ma min. 8 znaków';
-    
+
     // Act
     await page.getByTestId('login-input').fill(tooShort); // await page.getByTestId('login-input').click();
     await page.getByTestId('password-input').click();
@@ -44,7 +45,7 @@ test.describe('User login to Account', () => {
   test('unsuccessful login with too short password', async ({ page }) => {
     // Arrange
     const tooShort = '123';
-    const login = '111111111';
+    const login = loginData.login; //wywołanie danych z pliku test-data/login.data.ts
     const expectedError = 'identyfikator ma min. 8 znaków';
 
     // Act

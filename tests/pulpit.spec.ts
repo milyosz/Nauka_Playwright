@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { loginData } from '../test-data/login.data';
 
 test.describe('Pulpit account test', () => {
   // Arrange
-  const login = '111111111';
-  const password = 'qwertyui';
+  const login = loginData.login; //wywołanie danych z pliku test-data/login.data.ts
+  const password = loginData.password;
   const rValue = Math.floor(Math.random() * (50 - 20) + 20);
   const blankMessage = 'Brak wiadomości';
 
