@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "open:test:UI": "npx playwright test --ui",
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
     "test:pulpit:headed": "npm run test tests/pulpit.spec.ts -- --headed",
